@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  common: &BASE
+    build:
+      context: .
+  chromedriver:
+    image: robcherry/docker-chromedriver:latest
+    ports:
+      - "4444:4444"
+    environment:
+      CHROMEDRIVER_WHITELISTED_IPS: ""
+
+  acceptance-tests:
+    <<: *BASE
+    command: yarn acceptance
+    depends_on:
+      - chromedriver
